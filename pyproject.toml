@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-simple-analytics"
-version = "0.1.4"
+version = "0.1.5"
 description = "A simple django packages to track requests on the site"
 authors = ["Ferran Jovell <ferran.jovell+gh@gmail.com>"]
 license = "MIT"
