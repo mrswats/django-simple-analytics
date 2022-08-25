@@ -28,15 +28,20 @@ python = "^3.7"
 Django = "3.2.14"
 
 [tool.poetry.dev-dependencies]
+black = "^22.6.0"
+flake8 = "^5.0.4"
+flake8-black = "^0.3.3"
+flake8-bugbear = "^22.8.23"
+flake8-isort = "^4.2.0"
+isort = "^5.10.1"
 pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 pytest-django = "^4.5.2"
-black = "^22.6.0"
-isort = "^5.10.1"
-flake8 = "^5.0.4"
-flake8-black = "^0.3.3"
-flake8-isort = "^4.2.0"
-flake8-bugbear = "^22.8.23"
+pytest-sugar = "^0.9.5"
+time-machine = "^2.8.1"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
 
 [tool.black]
 line-length = 99

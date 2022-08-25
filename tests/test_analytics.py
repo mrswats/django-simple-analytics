@@ -1,7 +1,8 @@
 import pytest
 import time_machine
-from analytics import middleware, models
 from django.utils import timezone
+
+from simple_analytics import middleware, models
 
 from .conftest import ANALYTICS_MIDDLEWARE
 
