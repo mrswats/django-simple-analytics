@@ -1,0 +1,5 @@
+[flake8]
+exclude = artifacts/
+max-line-length = 99
+ignore = W503
+

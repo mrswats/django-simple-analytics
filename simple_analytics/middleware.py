@@ -42,10 +42,7 @@ def process_analytics(
 
 
 def _match_path(request_path: str) -> bool:
-    return any(
-        re.match(rf"/?{excluded_path}/?", request_path)
-        for excluded_path in EXCLUDED_PATHS
-    )
+    return any(re.match(rf"/?{excluded_path}/?", request_path) for excluded_path in EXCLUDED_PATHS)
 
 
 def page_counts(get_response: Callable) -> Callable:

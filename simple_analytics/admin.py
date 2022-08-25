@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from analytics import models
+from simple_analytics import models
 
 
 @admin.register(models.VisitPerPage)

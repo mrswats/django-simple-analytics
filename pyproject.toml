@@ -1,0 +1,97 @@
+[tool.poetry]
+name = "django-simple-analytics"
+version = "0.1.0"
+description = "A simple django packages to track requests on the site"
+authors = ["Ferran Jovell <ferran.jovell+gh@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/mrswats/django-simple-analytics"
+keywords = ["django", "analytics"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Utilities",
+    "Environment :: Web Environment",
+    "Framework :: Django"
+]
+packages = {
+    { include = "simple_analytics"},
+}
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Django = "3.2.14"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+pytest-django = "^4.5.2"
+black = "^22.6.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+flake8-black = "^0.3.3"
+flake8-isort = "^4.2.0"
+flake8-bugbear = "^22.8.23"
+
+[tool.black]
+line-length = 99
+target_version = ["py37"]
+skip-string-normalization = false
+include = "\\.pyi?$"
+exclude = """
+(
+  /(
+      \\.eggs         # exclude a few common directories in the
+    | \\.git          # root of the project
+    | \\.hg
+    | \\.mypy_cache
+    | \\.tox
+    | \\.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+"""
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+files = "src"
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
+show_error_codes = true
+strict = true
+enable_error_code = [
+    "ignore-without-code",
+    "redundant-expr",
+    "truthy-bool",
+]
+
+
+[tool.coverage.run]
+source = ["."]
+branch = true
+omit = [
+    "**/tests/*",
+    "**/migrations/*.py",
+]
+
+[tool.coverage.report]
+skip_empty = true
+fail_under = 90
+
+[tool.coverage.html]
+directory = "artifacts/htmlcov/"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

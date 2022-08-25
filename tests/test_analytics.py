@@ -66,10 +66,7 @@ def test_page_analytics_model_fields(page_analytics, field):
 
 @pytest.mark.django_db
 def test_page_analytics_model_repr(page_analytics):
-    assert (
-        repr(page_analytics)
-        == f"<VisitPerPage: /path [{test_date.strftime('%Y-%m-%d')}] - 1>"
-    )
+    assert repr(page_analytics) == f"<VisitPerPage: /path [{test_date.strftime('%Y-%m-%d')}] - 1>"
 
 
 @pytest.mark.parametrize(
@@ -88,9 +85,7 @@ def test_normalize_request_path_allows_root():
 
 
 @pytest.mark.django_db
-def test_process_analytics_no_existing_analytics_for_page(
-    run_analytics, analytics_count
-):
+def test_process_analytics_no_existing_analytics_for_page(run_analytics, analytics_count):
     assert analytics_count() == 1
 
 
