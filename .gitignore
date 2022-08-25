@@ -1,0 +1,24 @@
+# .gitignore
+__pycache__
+.coverage*
+htmlcov
+*.pyc
+*egg*
+*.txt
+!robots.txt
+junit.xml
+dist
+.env*
+pgdata
+*.db
+flakehell.json
+certificates/
+artifacts/
+
+node_modules/
+**/dist/styles.css
+fjmwebsite/static/fontawesomefree
+fjmwebsite/static/admin
+fjmwebsite/static/css
+
+*.csv

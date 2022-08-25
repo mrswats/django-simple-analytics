@@ -19,9 +19,9 @@ classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django"
 ]
-packages = {
+packages = [
     { include = "simple_analytics"},
-}
+ ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
