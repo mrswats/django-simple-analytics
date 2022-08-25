@@ -176,8 +176,21 @@ def test_process_analytics_records_logged_in_users(
 
 
 def test_analytics_admin_list_display(admin_instance):
-    admin_instance.list_display == ("page", "method", "date", "view_count", "username", "exists")
+    assert admin_instance.list_display == (
+        "page",
+        "method",
+        "date",
+        "view_count",
+        "username",
+        "exists",
+    )
 
 
 def test_analytics_admin_list_filter(admin_instance):
-    admin_instance.list_filter == ("exists", "date", "method", "username", "page")
+    assert admin_instance.list_filter == (
+        "exists",
+        "date",
+        "method",
+        "username",
+        "page",
+    )
