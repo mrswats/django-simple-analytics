@@ -1,8 +1,9 @@
 import pytest
 import time_machine
+from django.contrib import admin as django_admin
 from django.utils import timezone
 
-from simple_analytics import middleware, models
+from simple_analytics import admin, middleware, models
 
 from .conftest import ANALYTICS_MIDDLEWARE
 
@@ -47,6 +48,16 @@ def analytics_count():
         return models.VisitPerPage.objects.count()
 
     return _
+
+
+@pytest.fixture
+def admin_site():
+    return django_admin.AdminSite()
+
+
+@pytest.fixture
+def admin_instance(admin_site):
+    return admin.PageAnalyticsAdmin(model=models.VisitPerPage, admin_site=admin_site)
 
 
 @pytest.mark.parametrize(
@@ -162,3 +173,11 @@ def test_process_analytics_records_logged_in_users(
 ):
     get("test-url")
     assert first_row_analytics().username == "fjm"
+
+
+def test_analytics_admin_list_display(admin_instance):
+    admin_instance.list_display == ("page", "method", "date", "view_count", "username", "exists")
+
+
+def test_analytics_admin_list_filter(admin_instance):
+    admin_instance.list_filter == ("exists", "date", "method", "username", "page")

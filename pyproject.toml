@@ -86,6 +86,7 @@ enable_error_code = [
 source = ["."]
 branch = true
 omit = [
+    "manage.py",
     "**/tests/*",
     "**/migrations/*.py",
 ]
