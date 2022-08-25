@@ -39,6 +39,7 @@ pytest-cov = "^3.0.0"
 pytest-django = "^4.5.2"
 pytest-sugar = "^0.9.5"
 time-machine = "^2.8.1"
+pre-commit = "^2.20.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
