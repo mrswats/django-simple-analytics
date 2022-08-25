@@ -16,6 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
+    env:
+      TWINE_USERNAME: __token__
+      TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 
     steps:
       - uses: actions/checkout@v3
@@ -27,13 +30,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade poetry
+          python -m pip install --upgrade pip poetry twine
 
       - name: Build package
         run: poetry build
 
+      - name: Check Build
+        run: |
+          twine check dist/*.whl
+
       - name: Publish package
-        uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload dist/*.whl
