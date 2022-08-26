@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from simple_analytics import models
+from simple_analytics.models import VisitPerPage
 
 
-@admin.register(models.VisitPerPage)
-class PageAnalyticsAdmin(admin.ModelAdmin):
+@admin.register(VisitPerPage)
+class PageAnalyticsAdmin(admin.ModelAdmin[VisitPerPage]):
     list_display = (
         "page",
         "method",
