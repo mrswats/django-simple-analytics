@@ -14,6 +14,8 @@ EXCLUDED_PATHS = [
 
 STATUS_CODE_NOT_FOUND = 404
 
+CallableMiddleware = Callable[[HttpRequest], HttpResponse]
+
 
 def normalize_request_path(request_path: str) -> str:
     if request_path.endswith("/") and len(request_path) != 1:
@@ -45,15 +47,15 @@ def _match_path(request_path: str) -> bool:
     return any(re.match(rf"/?{excluded_path}/?", request_path) for excluded_path in EXCLUDED_PATHS)
 
 
-def page_counts(get_response: Callable) -> Callable:
+def page_counts(get_response: CallableMiddleware) -> CallableMiddleware:
     def middleware(request: HttpRequest) -> HttpResponse:
         response = get_response(request)
 
         if not _match_path(request.path):
             process_analytics(
                 request.get_full_path_info(),
-                request.method,
-                request.user,
+                request.method or "",
+                str(request.user),
                 exists=response.status_code != STATUS_CODE_NOT_FOUND,
             )
 
