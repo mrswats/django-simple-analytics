@@ -1,11 +1,6 @@
 # Django test settings
 from pathlib import Path
 
-import django_stubs_ext
-
-django_stubs_ext.monkeypatch()
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-tesitng-key"
