@@ -1,11 +1,5 @@
-from django.contrib import admin
-
-from simple_analytics.models import VisitPerPage
-
-
-@admin.register(VisitPerPage)
-class PageAnalyticsAdmin(admin.ModelAdmin[VisitPerPage]):
-    list_display = (
+def test_analytics_admin_list_display(admin_instance):
+    assert admin_instance.list_display == (
         "page",
         "method",
         "date",
@@ -15,7 +9,9 @@ class PageAnalyticsAdmin(admin.ModelAdmin[VisitPerPage]):
         "origin",
     )
 
-    list_filter = (
+
+def test_analytics_admin_list_filter(admin_instance):
+    assert admin_instance.list_filter == (
         "exists",
         "date",
         "method",
