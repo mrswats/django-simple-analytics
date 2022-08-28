@@ -32,7 +32,7 @@ create-release-commit() {
 	local version
 	version=$(poetry version --short)
 	git add pyproject.toml
-	git commit -m "Release ${version}"
+	SKIP=no-commit-to-branch git commit -m "Release ${version}"
 	git tag "v${version}" -m "Release ${version}"
 }
 
