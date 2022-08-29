@@ -1,13 +1,18 @@
 # Django Simple Analytics
 
+![PyPI](https://img.shields.io/pypi/v/django-simple-analytics?style=for-the-badge)
+[![](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
+![PyPI - License](https://img.shields.io/pypi/l/django-simple-analytics?style=for-the-badge)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-simple-analytics?style=for-the-badge)
+
 ⚠️ This package is still in beta. Do not use for production ⚠️
 
 Simple analytics is a very simple package to track requests done to the website and store them in database.
 
-
 ## Installation
 
 From PYPi using `pip`:
+
 ```
 pip install django-simple-analytics
 ```
@@ -46,8 +51,9 @@ Now every request done to the django website will be recorded in the database wi
 - Page: The path of the request.
 - Method: The verb used to request the page.
 - Whether the page exists or not.
+- Origin: If the header exists in the requst, where the request originated.
 - User: The user who performed the request. If the user is not authenticated, it will show as AnonymousUser.
-- view\_count: The number of requests to that page, per date and per method used.
+- view_count: The number of requests to that page, per date and per method used.
 
 ## Licence
 
