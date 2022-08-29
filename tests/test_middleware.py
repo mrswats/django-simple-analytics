@@ -4,7 +4,7 @@ from .conftest import test_date, test_origin
 
 
 @pytest.mark.parametrize(
-    "url_name, status",
+    "url_name, status_code",
     [
         ("test-url", 200),
         ("this-url-does-not-exist", 404),
@@ -13,9 +13,10 @@ from .conftest import test_date, test_origin
 @pytest.mark.urls("tests.urls")
 @pytest.mark.django_db
 def test_analytics_middleware_creates_objects(
-    get, analytics_middleware, analytics_count, url_name, status
+    url, client, analytics_middleware, analytics_count, url_name, status_code
 ):
-    get(url_name, expected_status_code=status)
+    response = client.get(url(url_name))
+    assert response.status_code == status_code
     assert analytics_count() == 1
 
 
@@ -29,18 +30,17 @@ def test_analytics_middleware_creates_objects(
 @pytest.mark.urls("tests.urls")
 @pytest.mark.django_db
 def test_analytics_middleware_creates_objects_with_status_not_found(
-    get, analytics_middleware, first_row_analytics, url_name, status_code, status
+    url, client, analytics_middleware, first_row_analytics, url_name, status_code, status
 ):
-    get(url_name, expected_status_code=status_code)
+    response = client.get(url(url_name))
+    assert response.status_code == status_code
     assert first_row_analytics().exists == status
 
 
 @pytest.mark.urls("tests.urls")
 @pytest.mark.django_db
-def test_analytics_middleware_ignores_query_params(get, first_row_analytics):
-    resp = get(
-        "test-url", request_kwargs={"data": {"param1": "AAAAAAAAAAA", "param2": "OOOOOOOOOOOO"}}
-    )
+def test_analytics_middleware_ignores_query_params(url, client, first_row_analytics):
+    resp = client.get(url("test-url"), data={"param1": "AAAAAAAAAAA", "param2": "OOOOOOOOOOOO"})
     assert resp.request.get("QUERY_STRING") != ""
     assert first_row_analytics().page == "/test-url-path/"
 
@@ -55,9 +55,9 @@ def test_analytics_middleware_ignores_query_params(get, first_row_analytics):
 @pytest.mark.django_db
 @pytest.mark.urls("tests.urls")
 def test_process_analytics_ignores_certain_paths(
-    get, analytics_middleware, analytics_count, ignored_path
+    url, client, analytics_middleware, analytics_count, ignored_path
 ):
-    get("test-ignored-url", custom_path=ignored_path)
+    client.get(url("test-ignored-url", custom_path=ignored_path))
     assert analytics_count() == 0
 
 
@@ -81,9 +81,9 @@ def test_process_analytics_ignores_certain_paths(
 @pytest.mark.django_db
 @pytest.mark.urls("tests.urls")
 def test_process_analytics_records_field(
-    get, analytics_middleware, first_row_analytics, field, expected_value
+    url, client, analytics_middleware, first_row_analytics, field, expected_value
 ):
-    get("test-url")
+    client.get(url("test-url"))
     assert getattr(first_row_analytics(), field) == expected_value
 
 
@@ -107,7 +107,8 @@ def test_process_analytics_records_field(
 @pytest.mark.django_db
 @pytest.mark.urls("tests.urls")
 def test_process_analytics_records_logged_in_users_records_fields(
-    login, get, analytics_middleware, first_row_analytics, field, expected_value
+    url, login, client, analytics_middleware, first_row_analytics, field, expected_value
 ):
-    get("test-url", request_kwargs={"headers": {"HTTP_REFERER": test_origin}})
+
+    client.get(url("test-url"), HTTP_REFERER=test_origin)
     assert getattr(first_row_analytics(), field) == expected_value
