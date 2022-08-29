@@ -1,5 +1,4 @@
 import datetime as dt
-from typing import Optional
 
 import pytest
 import time_machine
@@ -44,22 +43,6 @@ def url():
 @pytest.fixture
 def login(client, user):
     client.force_login(user)
-
-
-@pytest.fixture
-def get(client, url):
-    def _(
-        url_name: str,
-        expected_status_code: int = 200,
-        follow: bool = True,
-        headers: Optional[dict] = None,
-        **url_kwargs,
-    ):
-        response = client.get(url(url_name, **url_kwargs), follow=follow, **(headers or {}))
-        assert response.status_code == expected_status_code
-        return response
-
-    return _
 
 
 @pytest.fixture

@@ -27,7 +27,7 @@ def normalize_request_path(request_path: str) -> str:
 def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
     analytics, created = VisitPerPage.objects.get_or_create(
         date=dt.date.today(),
-        page=request.get_full_path_info(),
+        page=request.path,
         method=request.method or "",
         username=str(request.user),
         origin=request.META.get("HTTP_REFERER", ""),
