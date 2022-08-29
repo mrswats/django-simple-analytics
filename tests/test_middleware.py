@@ -106,9 +106,29 @@ def test_process_analytics_records_field(
 )
 @pytest.mark.django_db
 @pytest.mark.urls("tests.urls")
+@pytest.mark.usefixtures("analytics_middleware")
 def test_process_analytics_records_logged_in_users_records_fields(
-    url, login, client, analytics_middleware, first_row_analytics, field, expected_value
+    url, login, client, first_row_analytics, field, expected_value
 ):
 
     client.get(url("test-url"), HTTP_REFERER=test_origin)
     assert getattr(first_row_analytics(), field) == expected_value
+
+
+@pytest.mark.parametrize(
+    "referer, expected_origin",
+    [
+        ("localhost", "localhost"),
+        ("https://example.com/mypath", "https://example.com/mypath"),
+        ("https://example.com/mypath/?query1=aaa", "https://example.com/mypath/"),
+        ("https://example.com/mypath/?query1=aaa&query2=bbbb", "https://example.com/mypath/"),
+    ],
+)
+@pytest.mark.django_db
+@pytest.mark.urls("tests.urls")
+@pytest.mark.usefixtures("analytics_middleware")
+def test_process_analytics_removes_query_string_from_referer_url(
+    url, client, first_row_analytics, referer, expected_origin
+):
+    client.get(url("test-url"), HTTP_REFERER=referer)
+    assert first_row_analytics().origin == expected_origin
