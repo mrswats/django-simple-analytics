@@ -51,11 +51,11 @@ def get(client, url):
     def _(
         url_name: str,
         expected_status_code: int = 200,
-        follow: bool = True,
-        headers: Optional[dict] = None,
+        request_kwargs: Optional[dict] = None,
         **url_kwargs,
     ):
-        response = client.get(url(url_name, **url_kwargs), follow=follow, **(headers or {}))
+        url_under_test = url(url_name, **url_kwargs)
+        response = client.get(url_under_test, **(request_kwargs or {}))
         assert response.status_code == expected_status_code
         return response
 

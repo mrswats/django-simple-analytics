@@ -35,6 +35,16 @@ def test_analytics_middleware_creates_objects_with_status_not_found(
     assert first_row_analytics().exists == status
 
 
+@pytest.mark.urls("tests.urls")
+@pytest.mark.django_db
+def test_analytics_middleware_ignores_query_params(get, first_row_analytics):
+    resp = get(
+        "test-url", request_kwargs={"data": {"param1": "AAAAAAAAAAA", "param2": "OOOOOOOOOOOO"}}
+    )
+    assert resp.request.get("QUERY_STRING") != ""
+    assert first_row_analytics().page == "/test-url-path/"
+
+
 @pytest.mark.parametrize(
     "ignored_path",
     [
@@ -99,5 +109,5 @@ def test_process_analytics_records_field(
 def test_process_analytics_records_logged_in_users_records_fields(
     login, get, analytics_middleware, first_row_analytics, field, expected_value
 ):
-    get("test-url", headers={"HTTP_REFERER": test_origin})
+    get("test-url", request_kwargs={"headers": {"HTTP_REFERER": test_origin}})
     assert getattr(first_row_analytics(), field) == expected_value
