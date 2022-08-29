@@ -1,6 +1,7 @@
 import datetime as dt
 import re
 from typing import Any, Callable
+from urllib.parse import urlparse, urlunparse
 
 from django.db.models import F
 from django.http import HttpRequest, HttpResponse
@@ -24,13 +25,20 @@ def normalize_request_path(request_path: str) -> str:
     return request_path
 
 
+def remove_query_params_from_url(url: str) -> str:
+    schema, netloc, path, *_ = urlparse(url)
+    return urlunparse((schema, netloc, path, "", "", ""))
+
+
 def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
+    referer_url = request.META.get("HTTP_REFERER", "")
+
     analytics, created = VisitPerPage.objects.get_or_create(
         date=dt.date.today(),
         page=request.path,
         method=request.method or "",
         username=str(request.user),
-        origin=request.META.get("HTTP_REFERER", ""),
+        origin=remove_query_params_from_url(referer_url),
         **kwargs,
     )
 
