@@ -4,10 +4,10 @@
 
 Simple analytics is a very simple package to track requests done to the website and store them in database.
 
-
 ## Installation
 
 From PYPi using `pip`:
+
 ```
 pip install django-simple-analytics
 ```
@@ -46,8 +46,9 @@ Now every request done to the django website will be recorded in the database wi
 - Page: The path of the request.
 - Method: The verb used to request the page.
 - Whether the page exists or not.
+- Origin: If the header exists in the requst, where the request originated.
 - User: The user who performed the request. If the user is not authenticated, it will show as AnonymousUser.
-- view\_count: The number of requests to that page, per date and per method used.
+- view_count: The number of requests to that page, per date and per method used.
 
 ## Licence
 
