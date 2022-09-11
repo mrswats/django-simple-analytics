@@ -1,11 +1,13 @@
-[tool.poetry]
+[project]
 name = "django-simple-analytics"
 version = "0.3.1"
 description = "A simple django packages to track requests on the site"
-authors = ["Ferran Jovell <ferran.jovell+gh@gmail.com>"]
-license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/mrswats/django-simple-analytics"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+    {name = "Ferran Jovell", email = "ferran.jovell+gh@gmail.com"}
+]
 keywords = ["django", "analytics"]
 classifiers = [
     "Intended Audience :: Developers",
@@ -19,34 +21,30 @@ classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django"
 ]
-packages = [
-    { include = "simple_analytics"},
+ dependencies = [
+    "Django>=3.2.14"
  ]
 
-[tool.poetry.dependencies]
-python = "^3.7"
-Django = ">=3.2.14"
+[project.urls]
+homepage = "https://github.com/mrswats/django-simple-analytics"
+"Bug Tracker" = "https://github.com/mrswats/django-simple-analytics/issues"
 
-[tool.poetry.dev-dependencies]
-black = "^22.6.0"
-django-stubs = {version = "^1.12.0", extras = ["compatible-mypy"]}
-flake8 = "^5.0.4"
-flake8-black = "^0.3.3"
-flake8-bugbear = "^22.8.23"
-flake8-builtins = "^1.5.3"
-flake8-comprehensions = "^3.10.0"
-flake8-isort = "^4.2.0"
-flake8-print = "^5.0.0"
-flake8-variables-names = "^0.0.5"
-isort = "^5.10.1"
-mypy = "0.961"
-pre-commit = "^2.20.0"
-pytest = "^7.1.2"
-pytest-cov = "^3.0.0"
-pytest-django = "^4.5.2"
-pytest-sugar = "^0.9.5"
-time-machine = "^2.8.1"
-typing-extensions = "^4.3.0"
+[project.optional-dependencies]
+test = [
+    "pre-commit==2.20.0",
+    "pytest==7.1.2",
+    "pytest-cov==3.0.0",
+    "pytest-django==4.5.2",
+    "pytest-sugar==0.9.5",
+    "time-machine==2.8.1",
+    "mypy==0.961",
+    "django-stubs[compatible-mypy]==1.12.0",
+    "typing-extensions==4.3.0",
+]
+
+[build-system]
+requires = ["setuptools>=63.0"]
+build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
@@ -112,7 +110,3 @@ fail_under = 90
 
 [tool.coverage.html]
 directory = "artifacts/htmlcov/"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

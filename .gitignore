@@ -1,13 +1,13 @@
-# .gitignore
+# .gitignore,
 __pycache__
 .coverage*
 htmlcov
 *.pyc
 *egg*
-*.txt
 !robots.txt
 junit.xml
-dist
+dist/
+build/
 .env*
 pgdata
 *.db
