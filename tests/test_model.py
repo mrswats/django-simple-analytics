@@ -13,6 +13,7 @@ from .conftest import GET, test_date, test_origin, test_path, test_username
         ("page", test_path),
         ("username", test_username),
         ("view_count", 1),
+        ("user_agent", ""),
     ],
 )
 @pytest.mark.django_db

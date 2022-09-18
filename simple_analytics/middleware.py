@@ -32,6 +32,7 @@ def remove_query_params_from_url(url: str) -> str:
 
 def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
     referer_url = request.META.get("HTTP_REFERER", "")
+    user_agent = request.META.get("HTTP_USER_AGENT", "")
 
     analytics, created = VisitPerPage.objects.get_or_create(
         date=dt.date.today(),
@@ -39,6 +40,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
         method=request.method or "",
         username=str(request.user),
         origin=remove_query_params_from_url(referer_url),
+        user_agent=user_agent,
         **kwargs,
     )
 
