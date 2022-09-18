@@ -7,6 +7,7 @@ def test_analytics_admin_list_display(admin_instance):
         "username",
         "exists",
         "origin",
+        "user_agent",
     )
 
 

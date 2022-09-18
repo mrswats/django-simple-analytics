@@ -13,6 +13,7 @@ class PageAnalyticsAdmin(admin.ModelAdmin):  # type: ignore[type-arg]
         "username",
         "exists",
         "origin",
+        "user_agent",
     )
 
     list_filter = (
