@@ -69,6 +69,7 @@ def test_process_analytics_ignores_certain_paths(
         ("method", "GET"),
         ("origin", ""),
         ("username", "AnonymousUser"),
+        ("user_agent", ""),
     ],
     ids=[
         "request date is recorded",
@@ -76,6 +77,7 @@ def test_process_analytics_ignores_certain_paths(
         "Method is defults to GET",
         "REFERER header not present defaults to empty string",
         "non-logged in users defaults to AnonymousUser",
+        "User-Agent defaults to emtpty string",
     ],
 )
 @pytest.mark.django_db
@@ -95,6 +97,7 @@ def test_process_analytics_records_field(
         ("method", "GET"),
         ("origin", test_origin),
         ("username", "fjm"),
+        ("user_agent", "python/django, tesating"),
     ],
     ids=[
         "request date is recorded",
@@ -102,6 +105,7 @@ def test_process_analytics_records_field(
         "Method is defults to GET",
         "REFERER header not present defaults to empty string",
         "non-logged in users defaults to AnonymousUser",
+        "User-Agent is recorded if it's in the requests headers",
     ],
 )
 @pytest.mark.django_db
@@ -111,7 +115,9 @@ def test_process_analytics_records_logged_in_users_records_fields(
     url, login, client, first_row_analytics, field, expected_value
 ):
 
-    client.get(url("test-url"), HTTP_REFERER=test_origin)
+    client.get(
+        url("test-url"), HTTP_REFERER=test_origin, HTTP_USER_AGENT="python/django, tesating"
+    )
     assert getattr(first_row_analytics(), field) == expected_value
 
 
