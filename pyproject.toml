@@ -1,6 +1,6 @@
 [project]
 name = "django-simple-analytics"
-version = "0.4.1"
+version = "0.4.2"
 description = "A simple django packages to track requests on the site"
 readme = "README.md"
 requires-python = ">=3.8"
