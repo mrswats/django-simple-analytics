@@ -5,8 +5,6 @@
 ![PyPI - License](https://img.shields.io/pypi/l/django-simple-analytics?style=for-the-badge)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-simple-analytics?style=for-the-badge)
 
-⚠️ This package is still in beta. Do not use for production ⚠️
-
 Simple analytics is a very simple package to track requests done to the website and store them in database.
 
 ## Installation
