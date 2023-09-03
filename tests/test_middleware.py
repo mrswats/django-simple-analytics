@@ -114,7 +114,6 @@ def test_process_analytics_records_field(
 def test_process_analytics_records_logged_in_users_records_fields(
     url, login, client, first_row_analytics, field, expected_value
 ):
-
     client.get(
         url("test-url"), HTTP_REFERER=test_origin, HTTP_USER_AGENT="python/django, tesating"
     )
