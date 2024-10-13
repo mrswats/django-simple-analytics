@@ -3,7 +3,7 @@ name = "django-simple-analytics"
 version = "1.0.1"
 description = "A simple django packages to track requests on the site"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = { file = "LICENSE" }
 authors = [
     {name = "Ferran Jovell", email = "ferran.jovell+gh@gmail.com"}

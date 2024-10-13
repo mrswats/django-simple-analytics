@@ -11,7 +11,7 @@ repos:
       - id: no-commit-to-branch
         args: [--branch, main]
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
   - repo: https://github.com/pycqa/isort
@@ -20,10 +20,10 @@ repos:
       - id: isort
         name: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
+    rev: v3.18.0
     hooks:
       - id: pyupgrade
-        args: ["--py38-plus"]
+        args: ["--py39-plus"]
   - repo: https://github.com/PyCQA/flake8
     rev: 7.1.1
     hooks:
