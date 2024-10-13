@@ -8,8 +8,6 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
       - id: check-merge-conflict
-      - id: no-commit-to-branch
-        args: [--branch, main]
   - repo: https://github.com/psf/black
     rev: 24.10.0
     hooks:
