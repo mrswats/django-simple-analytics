@@ -55,7 +55,7 @@ sqlparse==0.4.2
     # via django
 termcolor==2.0.0
     # via pytest-sugar
-time-machine==2.8.1
+time-machine==2.16.0
     # via django-simple-analytics (pyproject.toml)
 tomli==2.0.1
     # via

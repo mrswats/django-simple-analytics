@@ -36,7 +36,7 @@ test = [
     "pytest-cov==3.0.0",
     "pytest-django==4.5.2",
     "pytest-sugar==0.9.5",
-    "time-machine==2.8.1",
+    "time-machine==2.16.0",
     "django-stubs[compatible-mypy]==1.12.0",
     "typing-extensions==4.3.0",
 ]
