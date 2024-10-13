@@ -32,8 +32,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r dev-requirements.txt
 
-      - name: Lint with flake8
-        run: pre-commit run --all-files flake8
+      - uses: pre-commit/action@v3.0.1
 
       - name: Lint Mypy
         run: mypy .
