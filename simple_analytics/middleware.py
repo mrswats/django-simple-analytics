@@ -46,7 +46,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
             user_agent=user_agent,
             **kwargs,
         )
-        view_count = F("view_count")
+        view_count = analytics.view_count
     except MultipleObjectsReturned:
         analytics = VisitPerPage.objects.filter(
             date=dt.date.today(),
@@ -78,7 +78,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
         )[1:]
         VisitPerPage.objects.exclude(pk__in=list(multiple_objects)).delete()
 
-    if not created:
+    if analytics and not created:
         analytics.view_count = view_count + 1
         analytics.save()
 
