@@ -3,7 +3,8 @@ import re
 from typing import Any, Callable
 from urllib.parse import urlparse, urlunparse
 
-from django.db.models import F
+from django.db.models import F, Sum
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpRequest, HttpResponse
 
 from simple_analytics.models import VisitPerPage
@@ -34,18 +35,51 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
     referer_url = request.META.get("HTTP_REFERER", "")
     user_agent = request.META.get("HTTP_USER_AGENT", "")
 
-    analytics, created = VisitPerPage.objects.get_or_create(
-        date=dt.date.today(),
-        page=request.path,
-        method=request.method or "",
-        username=str(request.user),
-        origin=remove_query_params_from_url(referer_url),
-        user_agent=user_agent,
-        **kwargs,
-    )
+    analytics, created, view_count = None, False, 0
+    try:
+        analytics, created = VisitPerPage.objects.get_or_create(
+            date=dt.date.today(),
+            page=request.path,
+            method=request.method or "",
+            username=str(request.user),
+            origin=remove_query_params_from_url(referer_url),
+            user_agent=user_agent,
+            **kwargs,
+        )
+        view_count = F("view_count")
+    except MultipleObjectsReturned:
+        analytics = VisitPerPage.objects.filter(
+            date=dt.date.today(),
+            page=request.path,
+            method=request.method or "",
+            username=str(request.user),
+            origin=remove_query_params_from_url(referer_url),
+            user_agent=user_agent,
+            **kwargs,
+        ).first()
+        view_count = VisitPerPage.objects.filter(
+            date=dt.date.today(),
+            page=request.path,
+            method=request.method or "",
+            username=str(request.user),
+            origin=remove_query_params_from_url(referer_url),
+            user_agent=user_agent,
+            **kwargs,
+        ).aggregate(view_count=Sum("view_count", default=0))["view_count"]
+
+        multiple_objects = VisitPerPage.objects.filter(
+            date=dt.date.today(),
+            page=request.path,
+            method=request.method or "",
+            username=str(request.user),
+            origin=remove_query_params_from_url(referer_url),
+            user_agent=user_agent,
+            **kwargs,
+        )[1:]
+        VisitPerPage.objects.exclude(pk__in=list(multiple_objects)).delete()
 
     if not created:
-        analytics.view_count = F("view_count") + 1
+        analytics.view_count = view_count + 1
         analytics.save()
 
     return analytics
