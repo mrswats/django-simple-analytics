@@ -4,7 +4,7 @@ from typing import Any, Callable
 from urllib.parse import urlparse, urlunparse
 
 from django.core.exceptions import MultipleObjectsReturned
-from django.db.models import F, Sum
+from django.db.models import Sum
 from django.http import HttpRequest, HttpResponse
 
 from simple_analytics.models import VisitPerPage
