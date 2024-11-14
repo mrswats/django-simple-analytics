@@ -4,7 +4,7 @@ import pytest
 
 from simple_analytics.models import VisitPerPage
 
-from .conftest import GET, test_date, test_origin, test_username
+from .conftest import GET, test_date, test_origin
 
 
 @pytest.mark.parametrize(
