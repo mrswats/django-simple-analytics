@@ -1,6 +1,8 @@
+import datetime as dt
 import pytest
+from simple_analytics.models import VisitPerPage
 
-from .conftest import test_date, test_origin
+from .conftest import GET, test_date, test_origin, test_username
 
 
 @pytest.mark.parametrize(
@@ -137,3 +139,22 @@ def test_process_analytics_removes_query_string_from_referer_url(
 ):
     client.get(url("test-url"), HTTP_REFERER=referer)
     assert first_row_analytics().origin == expected_origin
+
+
+@pytest.mark.django_db
+@pytest.mark.urls("tests.urls")
+@pytest.mark.usefixtures("analytics_middleware")
+def test_process_analytics_multiple_objects_returned(url, client, analytics_count):
+    for _ in range(2):
+        VisitPerPage.objects.create(
+            date=dt.date.today(),
+            page="/test-url-path/",
+            method=GET,
+            username="fjm",
+            origin=test_origin,
+            user_agent="python/django, tesating",
+        )
+    client.get(
+        url("test-url"), HTTP_REFERER=test_origin, HTTP_USER_AGENT="python/django, tesating"
+    )
+    assert analytics_count() == 1
