@@ -59,7 +59,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
                 **kwargs,
             ).first()
             or VisitPerPage()
-        )  # NOTE: or will never happen bexause of MultipleObjectsReturned
+        )  # NOTE: the later will never happen because of MultipleObjectsReturned
         view_count = VisitPerPage.objects.filter(
             date=dt.date.today(),
             page=request.path,
@@ -81,7 +81,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
         )[1:]
         VisitPerPage.objects.filter(pk__in=list(multiple_objects)).delete()
 
-    if analytics and not created:
+    if not created:
         analytics.view_count = view_count + 1
         analytics.save()
 
