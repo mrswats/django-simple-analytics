@@ -78,7 +78,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
             origin=remove_query_params_from_url(referer_url),
             user_agent=user_agent,
             **kwargs,
-        )[1:]
+        ).values_list("pk", flat=True)[1:]
         VisitPerPage.objects.filter(pk__in=list(multiple_objects)).delete()
 
     if not created:
