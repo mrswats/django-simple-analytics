@@ -34,7 +34,7 @@ def process_analytics(request: HttpRequest, **kwargs: Any) -> VisitPerPage:
     referer_url = request.META.get("HTTP_REFERER", "")
     user_agent = request.META.get("HTTP_USER_AGENT", "")
 
-    analytics, created = VisitPerPage.objects.get_or_create(
+    analytics, created = VisitPerPage.objects.update_or_create(
         date=dt.date.today(),
         page=request.path,
         method=request.method or "",
