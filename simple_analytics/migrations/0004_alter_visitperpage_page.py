@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simple_analytics', '0003_visitperpage_user_agent'),
+        ("simple_analytics", "0003_visitperpage_user_agent"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='visitperpage',
-            name='page',
+            model_name="visitperpage",
+            name="page",
             field=models.TextField(),
         ),
     ]
