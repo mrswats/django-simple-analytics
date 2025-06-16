@@ -2,7 +2,7 @@ from django.db import models
 
 
 class VisitPerPage(models.Model):
-    page = models.CharField(max_length=100)
+    page = models.TextField()
     date = models.DateField()
     view_count = models.BigIntegerField(default=1)
     exists = models.BooleanField(default=True)
