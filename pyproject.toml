@@ -33,17 +33,19 @@ homepage = "https://github.com/mrswats/django-simple-analytics"
 
 [project.optional-dependencies]
 test = [
-    "pytest==7.1.2",
-    "pytest-cov==3.0.0",
-    "pytest-django==4.5.2",
-    "pytest-sugar==0.9.5",
-    "time-machine==2.16.0",
-    "django-stubs[compatible-mypy]==1.12.0",
-    "typing-extensions==4.3.0",
+    "django-stubs[compatible-mypy]",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "time-machine",
+    "typing-extensions",
 ]
 
 [build-system]
-requires = ["setuptools>=63.0"]
+requires = [
+    "setuptools",
+]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
@@ -51,7 +53,7 @@ DJANGO_SETTINGS_MODULE = "tests.settings"
 
 [tool.black]
 line-length = 99
-target_version = ["py37"]
+target_version = ["py39"]
 skip-string-normalization = false
 include = "\\.pyi?$"
 exclude = """

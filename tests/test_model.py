@@ -24,3 +24,9 @@ def test_page_analytics_model_fields(page_analytics, field, expected_value):
 @pytest.mark.django_db
 def test_page_analytics_model_repr(page_analytics):
     assert repr(page_analytics) == f"<VisitPerPage: /path [{test_date.strftime('%Y-%m-%d')}] - 1>"
+
+
+@pytest.mark.django_db
+def test_page_analytics_model_page_does_not_has_max_limit(page_analytics):
+    page_analytics.page = "a" * 500
+    page_analytics.save()
