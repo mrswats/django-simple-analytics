@@ -1,5 +1,5 @@
 ---
-name: Test
+name: Mypy
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - "main"
 
 jobs:
-  test:
+  mypy:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -32,5 +32,5 @@ jobs:
       - name: Install dependencies
         run: pip install '.[test]'
 
-      - name: Test with pytest
-        run: pytest -v
+      - name: Lint Mypy
+        run: mypy .
