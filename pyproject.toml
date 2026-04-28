@@ -65,9 +65,6 @@ skip-string-normalization = false
 include = "\\.pyi?$"
 exclude = "(\n  /(\n      \\.eggs         # exclude a few common directories in the\n    | \\.git          # root of the project\n    | \\.hg\n    | \\.mypy_cache\n    | \\.tox\n    | \\.venv\n    | _build\n    | buck-out\n    | build\n    | dist\n  )/\n)\n"
 
-[tool.isort]
-profile = "black"
-
 [tool.mypy]
 plugins = [
     "mypy_django_plugin.main",

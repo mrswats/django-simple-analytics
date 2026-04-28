@@ -1,10 +1,13 @@
 import datetime as dt
 import re
-from typing import Any, Callable
-from urllib.parse import urlparse, urlunparse
+from typing import Any
+from typing import Callable
+from urllib.parse import urlparse
+from urllib.parse import urlunparse
 
 from django.db.models import F
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
+from django.http import HttpResponse
 
 from simple_analytics.models import VisitPerPage
 

@@ -1,6 +1,10 @@
 import pytest
 
-from .conftest import GET, test_date, test_origin, test_path, test_username
+from .conftest import GET
+from .conftest import test_date
+from .conftest import test_origin
+from .conftest import test_path
+from .conftest import test_username
 
 
 @pytest.mark.parametrize(

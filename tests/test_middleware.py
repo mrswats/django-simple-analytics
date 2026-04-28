@@ -1,6 +1,7 @@
 import pytest
 
-from .conftest import test_date, test_origin
+from .conftest import test_date
+from .conftest import test_origin
 
 
 @pytest.mark.parametrize(

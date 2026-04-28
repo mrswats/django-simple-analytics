@@ -1,5 +1,7 @@
 from django import urls
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from django.http import HttpRequest
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 
 
 def dummy_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:

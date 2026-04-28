@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.test import RequestFactory
 from django.urls import reverse
 
-from simple_analytics import admin, middleware
+from simple_analytics import admin
+from simple_analytics import middleware
 from simple_analytics.models import VisitPerPage
 
 ANALYTICS_MIDDLEWARE = "simple_analytics.middleware.page_counts"
